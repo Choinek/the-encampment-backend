@@ -2,7 +2,6 @@
     "name": "vundor/the-encampment-backend",
     "description": "It's server for game The Encampment",
     "type": "project",
-    "license": "MIT",
     "authors": [
         {
             "name": "Choinek",
