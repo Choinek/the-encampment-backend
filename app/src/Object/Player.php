@@ -8,7 +8,7 @@ namespace VundorTheEncampment\Object;
  */
 class Player
 {
-    const WORLD_PARAM = 'w';
+    const ROOM_PARAM = 'r';
     const MESSAGE_PARAM = 'm';
     const LOGIN_PARAM = 'l';
     const POSITION_PARAM = 'p';
@@ -80,7 +80,7 @@ class Player
     {
         return [
             Player::POSITION_PARAM => $this->getPosition(),
-            Player::WORLD_PARAM    => $this->getCurrentWorld()
+            Player::ROOM_PARAM => $this->getCurrentWorld()
         ];
     }
 

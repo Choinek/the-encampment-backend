@@ -51,8 +51,8 @@ class GameServer
                     $this->players[$data[Player::LOGIN_PARAM]]->setPosition($data['x'], $data['y']);
                 }
 
-                if (isset($data[Player::WORLD_PARAM])) {
-                    $this->players[$data[Player::LOGIN_PARAM]]->setCurrentWorld($data[Player::WORLD_PARAM]);
+                if (isset($data[Player::ROOM_PARAM])) {
+                    $this->players[$data[Player::LOGIN_PARAM]]->setCurrentWorld($data[Player::ROOM_PARAM]);
                 }
             }
         });
