@@ -210,23 +210,23 @@ class Server
                     Player::LOGIN_PARAM => $playerData[Player::LOGIN_PARAM],
                     'x'                 => $data['x'],
                     'y'                 => $data['y'],
-                    Player::WORLD_PARAM => $data[Player::WORLD_PARAM]
+                    Player::ROOM_PARAM  => $data[Player::ROOM_PARAM]
                 ]));
             } else {
                 self::log("Player from connection {$frame->fd} not found");
             }
-        } elseif (isset($data[Player::WORLD_PARAM])) {
+        } elseif (isset($data[Player::ROOM_PARAM])) {
             if ($playerData = self::$playersTable->get($frame->fd)) {
                 $server->push(self::getGameserverId(), json_encode([
                     Player::LOGIN_PARAM => $playerData[Player::LOGIN_PARAM],
-                    Player::WORLD_PARAM => $data[Player::WORLD_PARAM]
+                    Player::ROOM_PARAM  => $data[Player::ROOM_PARAM]
                 ]));
             }
         } elseif (isset($data[Player::MESSAGE_PARAM])) {
             if ($playerData = self::$playersTable->get($frame->fd)) {
                 $this->broadcast($server, json_encode([
                     Player::LOGIN_PARAM   => $playerData[Player::LOGIN_PARAM],
-                    Player::WORLD_PARAM   => $playerData[Player::WORLD_PARAM],
+                    Player::ROOM_PARAM    => $playerData[Player::ROOM_PARAM],
                     Player::MESSAGE_PARAM => $data[Player::MESSAGE_PARAM]
                 ]));
             }
