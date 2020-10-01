@@ -58,6 +58,7 @@ class Server
             $this->handshake($request, $response);
         });
 
+
         $server->on('start', function ($server) {
             $this->start($server);
         });
@@ -68,6 +69,18 @@ class Server
 
         $server->on('close', function ($server, $fd) {
             $this->close($server, $fd);
+        });
+
+        $server->on('request', function ($request, $response) {
+            $logoPath = __DIR__ . '/assets/logo.png';
+            $logoType = pathinfo($logoPath, PATHINFO_EXTENSION);
+            $logoData = file_get_contents($logoPath);
+            $base64Logo = 'data:image/' . $logoType . ';base64,' . base64_encode($logoData);
+            $response->end('
+                <style>body { background: #000; color: #fff; font-size:36px }</style>
+                <img src="' . $base64Logo . '" alt="logo" /><br /><br />
+                Bad request - you should connect to websocket port.
+            ');
         });
 
         echo "Websocket is listening on ws://$bindAddress:$bindPort\n";
