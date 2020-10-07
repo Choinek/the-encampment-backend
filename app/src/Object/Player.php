@@ -11,27 +11,11 @@ class Player
     const ROOM_PARAM = 'r';
     const MESSAGE_PARAM = 'm';
     const LOGIN_PARAM = 'l';
-    const POSITION_PARAM = 'p';
 
     /**
      * @var string
      */
     public $login;
-
-    /**
-     * @var int
-     */
-    public $x = 0;
-
-    /**
-     * @var int
-     */
-    public $y = 0;
-
-    /**
-     * @var string
-     */
-    public $currentWorld = '';
 
     /**
      * @var string
@@ -79,39 +63,8 @@ class Player
     public function getPublicInfo()
     {
         return [
-            Player::POSITION_PARAM => $this->getPosition(),
-            Player::ROOM_PARAM => $this->getCurrentWorld()
+            // current hand etc here
         ];
-    }
-
-    /**
-     * @return array
-     */
-    public function getPosition(): array
-    {
-        return [
-            'x' => $this->x,
-            'y' => $this->y
-        ];
-    }
-
-    /**
-     * @return string
-     */
-    public function getCurrentWorld(): string
-    {
-        return $this->currentWorld;
-    }
-
-    /**
-     * @param $world
-     * @return bool
-     */
-    public function setCurrentWorld($world): bool
-    {
-        $this->currentWorld = $world;
-
-        return true;
     }
 
     /**

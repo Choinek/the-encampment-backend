@@ -217,18 +217,7 @@ class Server
             ));
         }
 
-        if (isset($data['x'], $data['y'])) {
-            if ($playerData = self::$playersTable->get($frame->fd)) {
-                $server->push(self::getGameserverId(), json_encode([
-                    Player::LOGIN_PARAM => $playerData[Player::LOGIN_PARAM],
-                    'x'                 => $data['x'],
-                    'y'                 => $data['y'],
-                    Player::ROOM_PARAM  => $data[Player::ROOM_PARAM]
-                ]));
-            } else {
-                self::log("Player from connection {$frame->fd} not found");
-            }
-        } elseif (isset($data[Player::ROOM_PARAM])) {
+        if (isset($data[Player::ROOM_PARAM])) {
             if ($playerData = self::$playersTable->get($frame->fd)) {
                 $server->push(self::getGameserverId(), json_encode([
                     Player::LOGIN_PARAM => $playerData[Player::LOGIN_PARAM],

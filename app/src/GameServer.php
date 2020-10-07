@@ -52,7 +52,7 @@ class GameServer
                 }
 
                 if (isset($data[Player::ROOM_PARAM])) {
-                    $this->players[$data[Player::LOGIN_PARAM]]->setCurrentWorld($data[Player::ROOM_PARAM]);
+                    // @todo room should join player to exact server - create new or join exiting with password
                 }
             }
         });
