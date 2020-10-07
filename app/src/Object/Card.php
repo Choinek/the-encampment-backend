@@ -2,10 +2,21 @@
 
 namespace VundorTheEncampment\Object;
 
-class Card implements CardInterface
+abstract class Card implements CardInterface
 {
-    public function play()
+    protected $title;
+
+    protected $description;
+
+    abstract public function play(): bool;
+
+    public function getTitle(): string
     {
-        // Card played
+        return $this->title;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
     }
 }
