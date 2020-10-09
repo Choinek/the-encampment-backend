@@ -20,6 +20,12 @@ class Room implements GameObjectInterface
     /** @var Card[]  */
     protected $environmentCards = [];
 
+    /**
+     * @var int
+     */
+    public static $daysIterator = 1;
+
+
     public function __construct(Player $player)
     {
         $this
