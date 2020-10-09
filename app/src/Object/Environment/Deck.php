@@ -1,7 +1,7 @@
 <?php
 namespace VundorTheEncampment\Object\Environment;
 
-class Deck extends \VundorTheEncampment\Object\Deck
+abstract class Deck extends \VundorTheEncampment\Object\Deck
 {
     public function __construct(int $cardNumber = 30, string $cardClassName = Card::class)
     {
