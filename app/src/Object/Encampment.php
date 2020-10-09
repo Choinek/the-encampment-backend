@@ -5,7 +5,7 @@ namespace VundorTheEncampment\Object;
 use VundorTheEncampment\Common\IdTrait;
 use VundorTheEncampment\Common\SerializeTrait;
 
-class Room implements GameObjectInterface
+class Encampment implements GameObjectInterface
 {
     use SerializeTrait, IdTrait;
 
@@ -24,7 +24,6 @@ class Room implements GameObjectInterface
      * @var int
      */
     public static $daysIterator = 1;
-
 
     public function __construct(Player $player)
     {

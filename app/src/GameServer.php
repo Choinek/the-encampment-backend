@@ -2,7 +2,6 @@
 
 namespace VundorTheEncampment;
 
-use Swoole\Client\WebSocket;
 use swoole_http_client;
 use VundorTheEncampment\Object\Player;
 
@@ -45,10 +44,6 @@ class GameServer
                     if ($sessionId = $this->loginNewPlayer($data[Player::LOGIN_PARAM])) {
                         $connection->push(json_encode(['session_id' => $sessionId]));
                     }
-                }
-
-                if (isset($data['x']) && isset($data['y'])) {
-                    $this->players[$data[Player::LOGIN_PARAM]]->setPosition($data['x'], $data['y']);
                 }
 
                 if (isset($data[Player::ROOM_PARAM])) {

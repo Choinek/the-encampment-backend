@@ -8,8 +8,8 @@ use swoole_http_response;
 use swoole_table;
 use swoole_websocket_frame;
 use swoole_websocket_server;
+use VundorTheEncampment\Object\Encampment;
 use VundorTheEncampment\Object\Player;
-use VundorTheEncampment\Object\Room;
 
 /**
  * Class Server
@@ -203,7 +203,7 @@ class Server
                     ParamsMap::PLAYERS_COLLECTION_PARAM => $playersResponseData,
                     ParamsMap::RESPONSE_ITERATOR_PARAM  => self::$responseIterator++,
                     ParamsMap::GAME_STATE_PARAM         => rand(1, 2),
-                    ParamsMap::DAY_ITERATOR_PARAM       => rand(0, 1) ? Room::$daysIterator++ : Room::$daysIterator,
+                    ParamsMap::DAY_ITERATOR_PARAM       => rand(0, 1) ? Encampment::$daysIterator++ : Encampment::$daysIterator,
                 ]));
             });
 
