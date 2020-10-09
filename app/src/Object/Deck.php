@@ -5,17 +5,21 @@ namespace VundorTheEncampment\Object;
 use Exception;
 use ReflectionClass;
 
-class Deck
+abstract class Deck
 {
     /**
      * @var Card[]
      */
     protected $cards = [];
 
-    public function __construct(int $cardNumber = 15, string $cardNamespace = Card::class)
+    protected $cardClassName;
+
+    public function __construct(int $cardNumber = 15, string $cardClassName = Card::class)
     {
+        $this->cardClassName = $cardClassName;
+
         $this
-            ->buildDeck($cardNumber, $cardNamespace)
+            ->buildDeck($cardNumber)
             ->shuffle();
     }
 
@@ -25,6 +29,14 @@ class Deck
             return array_shift($this->cards);
         }
         throw new Exception('No cards remaining');
+    }
+
+    public function addCard($card)
+    {
+        if ((new ReflectionClass($this->cardClassName))->isInstance($card)) {
+            $this->cards[] = $card;
+            $this->shuffle();
+        }
     }
 
     public function getCardCount(): int
@@ -39,13 +51,13 @@ class Deck
         return $this;
     }
 
-    protected function buildDeck(int $cardNumber, string $cardNamespace)
+    protected function buildDeck(int $cardNumber)
     {
-        if (!(new ReflectionClass($cardNamespace))->implementsInterface(CardInterface::class)) {
+        if (!(new ReflectionClass($this->cardClassName))->implementsInterface(CardInterface::class)) {
             throw new Exception('Wrong card class given');
         }
         for ($i = 0; $i < $cardNumber; $i++) {
-            $this->cards[] = new $cardNamespace;
+            $this->cards[] = new $this->cardClassName;
         }
 
         return $this;

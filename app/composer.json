@@ -6,10 +6,16 @@
         {
             "name": "Choinek",
             "email": "adrian@chojnicki.pl"
+        },
+        {
+            "name": "Lotriss",
+            "email": "mikolaj.bartoszko@protonmail.com"
         }
     ],
     "minimum-stability": "beta",
-    "require": {},
+    "require": {
+        "swoole/ide-helper": "@dev"
+    },
     "autoload": {
         "psr-4": {"VundorTheEncampment\\": "src/"}
     }
