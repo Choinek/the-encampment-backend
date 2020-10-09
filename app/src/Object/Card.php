@@ -2,13 +2,23 @@
 
 namespace VundorTheEncampment\Object;
 
-abstract class Card implements CardInterface
+use VundorTheEncampment\Common\IdTrait;
+use VundorTheEncampment\Common\SerializeTrait;
+
+abstract class Card implements CardInterface, GameObjectInterface
 {
+    use SerializeTrait, IdTrait;
+
     protected $title;
 
     protected $description;
 
     abstract public function play(): bool;
+
+    public function __construct()
+    {
+        $this->id = uniqid('card_');
+    }
 
     public function getTitle(): string
     {
