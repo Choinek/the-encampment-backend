@@ -27,6 +27,7 @@ abstract class Card implements CardInterface, GameObjectInterface
 
     public function getDescription(): string
     {
+        return 'Lorem ipsum dolor...';
         return $this->description;
     }
 }
