@@ -85,7 +85,7 @@ class GameServer
      */
     public function run()
     {
-        swoole_timer_tick(500, function ($timerId) {
+        swoole_timer_tick(3000, function ($timerId) {
             $data = [
                 'players'  => [],
                 'sessions' => []
