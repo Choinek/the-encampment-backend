@@ -30,11 +30,6 @@ class Server
     /**
      * @var swoole_table
      */
-    public static $chatTable;
-
-    /**
-     * @var swoole_table
-     */
     public static $handlersTable;
 
     /**
@@ -45,7 +40,12 @@ class Server
     /**
      * @var int
      */
-    public static $responseIterator = 0;
+    public static $responseIterator = 1;
+
+    /**
+     * @var int
+     */
+    public static $daysIterator = 1;
 
     /**
      * Initialize websocket server
@@ -108,13 +108,6 @@ class Server
         self::$gameworldTable = new swoole_table(8);
         self::$gameworldTable->column('data', swoole_table::TYPE_STRING, 1000000);
         self::$gameworldTable->create();
-
-        self::$chatTable = new swoole_table(1024);
-        self::$chatTable->column('timestamp', swoole_table::TYPE_INT);
-        self::$chatTable->column('player', swoole_table::TYPE_STRING, 50);
-        self::$chatTable->column('message', swoole_table::TYPE_STRING, 1000000);
-        self::$chatTable->column('world', swoole_table::TYPE_STRING, 50);
-        self::$chatTable->create();
     }
 
     /**
@@ -209,10 +202,12 @@ class Server
                 foreach ($playersData as $playerName => $playerData) {
                     $playersResponseData[] = array_merge(['name' => $playerName], $playerData);
                 }
+
                 $this->broadcast($server, json_encode([
                     ParamsMap::PLAYERS_COLLECTION_PARAM => $playersResponseData,
-                    ParamsMap::RESPONSE_ITERATOR_PARAM => self::$responseIterator++,
-                    ParamsMap::GAME_STATE_PARAM => rand(1,2)
+                    ParamsMap::RESPONSE_ITERATOR_PARAM  => self::$responseIterator++,
+                    ParamsMap::GAME_STATE_PARAM         => rand(1, 2),
+                    ParamsMap::DAY_ITERATOR_PARAM       => rand(0, 1) ? self::$daysIterator++ : self::$daysIterator,
                 ]));
             });
 
@@ -230,15 +225,15 @@ class Server
             if ($playerData = self::$playersTable->get($frame->fd)) {
                 $server->push(self::getGameserverId(), json_encode([
                     ParamsMap::LOGIN_PARAM => $playerData[ParamsMap::LOGIN_PARAM],
-                    Player::ROOM_PARAM  => $data[Player::ROOM_PARAM]
+                    Player::ROOM_PARAM     => $data[Player::ROOM_PARAM]
                 ]));
             }
         } elseif (isset($data[ParamsMap::MESSAGE_PARAM])) {
             if ($playerData = self::$playersTable->get($frame->fd)) {
                 $this->broadcast($server, json_encode([
-                    ParamsMap::LOGIN_PARAM   => $playerData[ParamsMap::LOGIN_PARAM],
-                    Player::ROOM_PARAM    => $playerData[Player::ROOM_PARAM],
-                    Player::MESSAGE_PARAM => $data[Player::MESSAGE_PARAM]
+                    ParamsMap::LOGIN_PARAM => $playerData[ParamsMap::LOGIN_PARAM],
+                    Player::ROOM_PARAM     => $playerData[Player::ROOM_PARAM],
+                    Player::MESSAGE_PARAM  => $data[Player::MESSAGE_PARAM]
                 ]));
             }
         }
