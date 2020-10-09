@@ -3,10 +3,10 @@
 namespace VundorTheEncampment\Action;
 
 /**
- * Class Login
+ * Class Message
  * @package VundorTheEncampment\Action
  */
-class Login implements ActionInterface
+class MessageAction implements ActionInterface
 {
 
     /**

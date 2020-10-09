@@ -9,6 +9,7 @@ use swoole_table;
 use swoole_websocket_frame;
 use swoole_websocket_server;
 use VundorTheEncampment\Object\Player;
+use VundorTheEncampment\Object\Room;
 
 /**
  * Class Server
@@ -41,11 +42,6 @@ class Server
      * @var int
      */
     public static $responseIterator = 1;
-
-    /**
-     * @var int
-     */
-    public static $daysIterator = 1;
 
     /**
      * Initialize websocket server
@@ -207,7 +203,7 @@ class Server
                     ParamsMap::PLAYERS_COLLECTION_PARAM => $playersResponseData,
                     ParamsMap::RESPONSE_ITERATOR_PARAM  => self::$responseIterator++,
                     ParamsMap::GAME_STATE_PARAM         => rand(1, 2),
-                    ParamsMap::DAY_ITERATOR_PARAM       => rand(0, 1) ? self::$daysIterator++ : self::$daysIterator,
+                    ParamsMap::DAY_ITERATOR_PARAM       => rand(0, 1) ? Room::$daysIterator++ : Room::$daysIterator,
                 ]));
             });
 

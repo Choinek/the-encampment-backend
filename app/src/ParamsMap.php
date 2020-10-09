@@ -21,9 +21,9 @@ class ParamsMap
 
 
     public static $handlers = [
-        self::LOGIN_PARAM   => \VundorTheEncampment\Action\Login::class,
-        self::MESSAGE_PARAM => \VundorTheEncampment\Action\Message::class,
-        self::ROOM_PARAM => \VundorTheEncampment\Action\Room::class,
+        self::LOGIN_PARAM   => \VundorTheEncampment\Action\LoginAction::class,
+        self::MESSAGE_PARAM => \VundorTheEncampment\Action\MessageAction::class,
+        self::ROOM_PARAM => \VundorTheEncampment\Action\RoomAction::class,
     ];
 }
 

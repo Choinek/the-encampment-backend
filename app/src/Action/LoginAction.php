@@ -6,7 +6,7 @@ namespace VundorTheEncampment\Action;
  * Class Login
  * @package VundorTheEncampment\Action
  */
-class Room implements ActionInterface
+class LoginAction implements ActionInterface
 {
 
     /**
