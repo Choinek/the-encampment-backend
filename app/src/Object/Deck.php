@@ -4,9 +4,13 @@ namespace VundorTheEncampment\Object;
 
 use Exception;
 use ReflectionClass;
+use VundorTheEncampment\Common\IdTrait;
+use VundorTheEncampment\Common\SerializeTrait;
 
-abstract class Deck
+abstract class Deck implements GameObjectInterface
 {
+    use SerializeTrait, IdTrait;
+
     /**
      * @var Card[]
      */
@@ -21,6 +25,8 @@ abstract class Deck
         $this
             ->buildDeck($cardNumber)
             ->shuffle();
+
+        $this->id = uniqid('deck');
     }
 
     public function drawCard()
@@ -62,4 +68,5 @@ abstract class Deck
 
         return $this;
     }
+
 }

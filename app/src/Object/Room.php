@@ -2,8 +2,13 @@
 
 namespace VundorTheEncampment\Object;
 
-class Room
+use VundorTheEncampment\Common\IdTrait;
+use VundorTheEncampment\Common\SerializeTrait;
+
+class Room implements GameObjectInterface
 {
+    use SerializeTrait, IdTrait;
+
     protected $id;
 
     /** @var Player[]  */
@@ -15,13 +20,10 @@ class Room
     /** @var Card[]  */
     protected $environmentCards = [];
 
-    public function __construct(?string $id, Player $player)
+    public function __construct(Player $player)
     {
-        if (is_null($id)) {
-            $id = uniqid('room_');
-        }
         $this
-            ->setId($id)
+            ->setId(uniqid('room_'))
             ->setPlayerList([$player]);
     }
 

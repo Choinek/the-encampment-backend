@@ -2,12 +2,17 @@
 
 namespace VundorTheEncampment\Object;
 
+use VundorTheEncampment\Common\IdTrait;
+use VundorTheEncampment\Common\SerializeTrait;
+
 /**
  * Class Player
  * @package VundorTheEncampment\Object
  */
-class Player
+class Player implements GameObjectInterface
 {
+    use SerializeTrait, IdTrait;
+
     const ROOM_PARAM = 'r';
     const MESSAGE_PARAM = 'm';
     const LOGIN_PARAM = 'l';
@@ -24,7 +29,7 @@ class Player
 
     /**
      * Player constructor.
-     * @param $id
+     * @param $login
      */
     public function __construct($login)
     {
@@ -41,20 +46,7 @@ class Player
         usleep(rand(1, 1000));
         $sessionToken .= uniqid(null);
 
-        $this->currentSessionToken = $sessionToken;
-    }
-
-    /**
-     * @param $x
-     * @param $y
-     * @return bool
-     */
-    public function setPosition($x, $y): bool
-    {
-        $this->x = $x;
-        $this->y = $y;
-
-        return true;
+        $this->id = $this->currentSessionToken = $sessionToken;
     }
 
     /**
