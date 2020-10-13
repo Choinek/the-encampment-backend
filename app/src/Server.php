@@ -72,15 +72,11 @@ class Server
         });
 
         $server->on('request', function ($request, $response) {
-            $logoPath = __DIR__ . '/assets/logo.png';
-            $logoType = pathinfo($logoPath, PATHINFO_EXTENSION);
-            $logoData = file_get_contents($logoPath);
-            $base64Logo = 'data:image/' . $logoType . ';base64,' . base64_encode($logoData);
-            $response->end('
-                <style>body { background: #000; color: #fff; font-size:36px }</style>
-                <img src="' . $base64Logo . '" alt="logo" /><br /><br />
-                Bad request - you should connect to websocket port.
-            ');
+            ob_clean();
+            ob_start();
+            include __DIR__.'/assets/index.phtml';
+            $index = ob_get_clean();
+            $response->end($index);
         });
 
         echo "Websocket is listening on ws://$bindAddress:$bindPort\n";
