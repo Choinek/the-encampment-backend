@@ -227,9 +227,9 @@ class Server
         } elseif (isset($data[ParamsMap::MESSAGE_PARAM])) {
             if ($playerData = self::$playersTable->get($frame->fd)) {
                 $this->broadcast($server, json_encode([
-                    ParamsMap::LOGIN_PARAM => $playerData[ParamsMap::LOGIN_PARAM],
-                    Player::ROOM_PARAM     => $playerData[Player::ROOM_PARAM],
-                    Player::MESSAGE_PARAM  => $data[Player::MESSAGE_PARAM]
+                    ParamsMap::LOGIN_PARAM   => $playerData[ParamsMap::LOGIN_PARAM],
+                    ParamsMap::ROOM_PARAM    => $playerData[ParamsMap::ROOM_PARAM],
+                    ParamsMap::MESSAGE_PARAM => $data[ParamsMap::MESSAGE_PARAM]
                 ]));
             }
         }
