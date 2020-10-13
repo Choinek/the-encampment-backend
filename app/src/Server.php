@@ -9,7 +9,6 @@ use swoole_table;
 use swoole_websocket_frame;
 use swoole_websocket_server;
 use VundorTheEncampment\Object\Encampment;
-use VundorTheEncampment\Object\Player;
 
 /**
  * Class Server
@@ -219,19 +218,19 @@ class Server
             ));
         }
 
-        if (isset($data[ParamsMap::ROOM_ACTION_PARAM])) {
+        if (isset($data[ParamsMap::ROOM_JOIN_ACTION_PARAM])) {
             if ($playerData = self::$playersTable->get($frame->fd)) {
                 $server->push(self::getGameserverId(), json_encode([
-                    ParamsMap::LOGIN_ACTION_PARAM => $playerData[ParamsMap::LOGIN_ACTION_PARAM],
-                    Player::ROOM_PARAM            => $data[Player::ROOM_PARAM]
+                    ParamsMap::LOGIN_ACTION_PARAM     => $playerData[ParamsMap::LOGIN_ACTION_PARAM],
+                    ParamsMap::ROOM_JOIN_ACTION_PARAM => $data[ParamsMap::ROOM_JOIN_ACTION_PARAM]
                 ]));
             }
         } elseif (isset($data[ParamsMap::MESSAGE_ACTION_PARAM])) {
             if ($playerData = self::$playersTable->get($frame->fd)) {
                 $this->broadcast($server, json_encode([
-                    ParamsMap::LOGIN_ACTION_PARAM   => $playerData[ParamsMap::LOGIN_ACTION_PARAM],
-                    ParamsMap::ROOM_ACTION_PARAM    => $playerData[ParamsMap::ROOM_ACTION_PARAM],
-                    ParamsMap::MESSAGE_ACTION_PARAM => $data[ParamsMap::MESSAGE_ACTION_PARAM]
+                    ParamsMap::LOGIN_ACTION_PARAM     => $playerData[ParamsMap::LOGIN_ACTION_PARAM],
+                    ParamsMap::ROOM_JOIN_ACTION_PARAM => $playerData[ParamsMap::ROOM_JOIN_ACTION_PARAM],
+                    ParamsMap::MESSAGE_ACTION_PARAM   => $data[ParamsMap::MESSAGE_ACTION_PARAM]
                 ]));
             }
         }

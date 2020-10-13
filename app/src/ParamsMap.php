@@ -20,7 +20,7 @@ class ParamsMap
      * @Group Login
      * @see RoomAction
      */
-    const ROOM_ACTION_PARAM = 'r';
+    const ROOM_JOIN_ACTION_PARAM = 'r';
 
     /**
      * @Group Chat
@@ -54,7 +54,7 @@ class ParamsMap
     public static $handlers = [
         self::LOGIN_ACTION_PARAM        => \VundorTheEncampment\Action\LoginAction::class,
         self::MESSAGE_ACTION_PARAM      => \VundorTheEncampment\Action\MessageAction::class,
-        self::ROOM_ACTION_PARAM         => \VundorTheEncampment\Action\RoomAction::class,
+        self::ROOM_JOIN_ACTION_PARAM    => \VundorTheEncampment\Action\RoomAction::class,
         self::PUT_CART_ACTION_PARAM     => \VundorTheEncampment\Action\PutCartAction::class,
         self::ACCEPT_CARTS_ACTION_PARAM => \VundorTheEncampment\Action\AcceptCartsAction::class,
     ];

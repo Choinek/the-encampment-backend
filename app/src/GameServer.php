@@ -39,14 +39,14 @@ class GameServer
 
             $data = json_decode($frame->data, true);
 
-            if (isset($data[Player::LOGIN_PARAM])) {
-                if (!isset($this->players[$data[Player::LOGIN_PARAM]])) {
-                    if ($sessionId = $this->loginNewPlayer($data[Player::LOGIN_PARAM])) {
+            if (isset($data[ParamsMap::LOGIN_ACTION_PARAM])) {
+                if (!isset($this->players[$data[ParamsMap::LOGIN_ACTION_PARAM]])) {
+                    if ($sessionId = $this->loginNewPlayer($data[ParamsMap::LOGIN_ACTION_PARAM])) {
                         $connection->push(json_encode(['session_id' => $sessionId]));
                     }
                 }
 
-                if (isset($data[Player::ROOM_PARAM])) {
+                if (isset($data[ParamsMap::ROOM_JOIN_ACTION_PARAM])) {
                     // @todo room should join player to exact server - create new or join exiting with password
                 }
             }

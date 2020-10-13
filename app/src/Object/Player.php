@@ -13,10 +13,6 @@ class Player implements GameObjectInterface
 {
     use SerializeTrait, IdTrait;
 
-    const ROOM_PARAM = 'r';
-    const MESSAGE_PARAM = 'm';
-    const LOGIN_PARAM = 'l';
-
     /**
      * @var string
      */
