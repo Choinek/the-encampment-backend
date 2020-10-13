@@ -94,7 +94,7 @@ class Server
     public function initializeTables()
     {
         self::$playersTable = new swoole_table(1024);
-        self::$playersTable->column(ParamsMap::LOGIN_PARAM, swoole_table::TYPE_STRING, 50);
+        self::$playersTable->column(ParamsMap::LOGIN_ACTION_PARAM, swoole_table::TYPE_STRING, 50);
         self::$playersTable->create();
 
         self::$handlersTable = new swoole_table(64);
@@ -202,34 +202,36 @@ class Server
                 $this->broadcast($server, json_encode([
                     ParamsMap::PLAYERS_COLLECTION_PARAM => $playersResponseData,
                     ParamsMap::RESPONSE_ITERATOR_PARAM  => self::$responseIterator++,
-                    ParamsMap::GAME_STATE_PARAM         => rand(1, 2),
-                    ParamsMap::DAY_ITERATOR_PARAM       => rand(0, 1) ? Encampment::$daysIterator++ : Encampment::$daysIterator,
+                    ParamsMap::GAME_STAGE_PARAM         => rand(1, 2),
+                    ParamsMap::DAY_ITERATOR_PARAM       => rand(0, 1)
+                        ? Encampment::$daysIterator++
+                        : Encampment::$daysIterator,
                 ]));
             });
 
-        } elseif (isset($data[ParamsMap::LOGIN_PARAM])) {
+        } elseif (isset($data[ParamsMap::LOGIN_ACTION_PARAM])) {
             self::$playersTable->set($frame->fd, [
-                ParamsMap::LOGIN_PARAM => $data[ParamsMap::LOGIN_PARAM]
+                ParamsMap::LOGIN_ACTION_PARAM => $data[ParamsMap::LOGIN_ACTION_PARAM]
             ]);
-            self::log("Player logged as: {$data[ParamsMap::LOGIN_PARAM]} from {$frame->fd}");
+            self::log("Player logged as: {$data[ParamsMap::LOGIN_ACTION_PARAM]} from {$frame->fd}");
             $server->push(self::getGameserverId(), json_encode(
-                [ParamsMap::LOGIN_PARAM => $data[ParamsMap::LOGIN_PARAM]]
+                [ParamsMap::LOGIN_ACTION_PARAM => $data[ParamsMap::LOGIN_ACTION_PARAM]]
             ));
         }
 
-        if (isset($data[ParamsMap::ROOM_PARAM])) {
+        if (isset($data[ParamsMap::ROOM_ACTION_PARAM])) {
             if ($playerData = self::$playersTable->get($frame->fd)) {
                 $server->push(self::getGameserverId(), json_encode([
-                    ParamsMap::LOGIN_PARAM => $playerData[ParamsMap::LOGIN_PARAM],
-                    Player::ROOM_PARAM     => $data[Player::ROOM_PARAM]
+                    ParamsMap::LOGIN_ACTION_PARAM => $playerData[ParamsMap::LOGIN_ACTION_PARAM],
+                    Player::ROOM_PARAM            => $data[Player::ROOM_PARAM]
                 ]));
             }
-        } elseif (isset($data[ParamsMap::MESSAGE_PARAM])) {
+        } elseif (isset($data[ParamsMap::MESSAGE_ACTION_PARAM])) {
             if ($playerData = self::$playersTable->get($frame->fd)) {
                 $this->broadcast($server, json_encode([
-                    ParamsMap::LOGIN_PARAM   => $playerData[ParamsMap::LOGIN_PARAM],
-                    ParamsMap::ROOM_PARAM    => $playerData[ParamsMap::ROOM_PARAM],
-                    ParamsMap::MESSAGE_PARAM => $data[ParamsMap::MESSAGE_PARAM]
+                    ParamsMap::LOGIN_ACTION_PARAM   => $playerData[ParamsMap::LOGIN_ACTION_PARAM],
+                    ParamsMap::ROOM_ACTION_PARAM    => $playerData[ParamsMap::ROOM_ACTION_PARAM],
+                    ParamsMap::MESSAGE_ACTION_PARAM => $data[ParamsMap::MESSAGE_ACTION_PARAM]
                 ]));
             }
         }

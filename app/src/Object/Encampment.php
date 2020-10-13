@@ -9,6 +9,8 @@ class Encampment implements GameObjectInterface
 {
     use SerializeTrait, IdTrait;
 
+    const MAX_GAME_STAGE = 1;
+
     protected $id;
 
     /** @var Player[]  */
@@ -25,6 +27,15 @@ class Encampment implements GameObjectInterface
      */
     public static $daysIterator = 1;
 
+    /**
+     * @var int
+     */
+    public static $gameStage = 0;
+
+    /**
+     * Encampment constructor.
+     * @param Player $player
+     */
     public function __construct(Player $player)
     {
         $this
@@ -32,6 +43,10 @@ class Encampment implements GameObjectInterface
             ->setPlayerList([$player]);
     }
 
+    /**
+     * @param string $uuid
+     * @return $this
+     */
     public function setId(string $uuid)
     {
         $this->id = $uuid;
@@ -39,11 +54,18 @@ class Encampment implements GameObjectInterface
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getId(): string
     {
         return $this->id;
     }
 
+    /**
+     * @param array $playerList
+     * @return $this
+     */
     public function setPlayerList(array $playerList)
     {
         $this->players = $playerList;
@@ -51,8 +73,26 @@ class Encampment implements GameObjectInterface
         return $this;
     }
 
+    /**
+     * @return Player[]
+     */
     public function getPlayerList(): array
     {
         return $this->players;
     }
+
+    public function nextDay()
+    {
+        self::$daysIterator++;
+    }
+
+    public function nextStage()
+    {
+        if (self::$gameStage < self::MAX_GAME_STAGE) {
+            self::$gameStage++;
+        }
+
+        self::$gameStage = 0;
+    }
+
 }
