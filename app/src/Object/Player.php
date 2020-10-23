@@ -4,6 +4,7 @@ namespace VundorTheEncampment\Object;
 
 use VundorTheEncampment\Common\IdTrait;
 use VundorTheEncampment\Common\SerializeTrait;
+use VundorTheEncampment\Object\Player\Deck as PlayerDeck;
 
 /**
  * Class Player
@@ -24,12 +25,18 @@ class Player implements GameObjectInterface
     public $currentSessionToken = '';
 
     /**
+     * @var PlayerDeck
+     */
+    protected $playerDeck;
+
+    /**
      * Player constructor.
      * @param $login
      */
     public function __construct($login)
     {
         $this->login = $login;
+        $this->playerDeck = new PlayerDeck();
         $this->regenerateSessionToken();
     }
 
@@ -51,7 +58,8 @@ class Player implements GameObjectInterface
     public function getPublicInfo()
     {
         return [
-            // current hand etc here
+            'name' => $this->getLogin(),
+            'deck' => $this->playerDeck->getPublicData(),
         ];
     }
 

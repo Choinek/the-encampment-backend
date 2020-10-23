@@ -16,11 +16,17 @@ class Encampment implements GameObjectInterface
     /** @var Player[]  */
     protected $players = [];
 
-    /** @var Card[] */
-    protected $playableCards = [];
+    /** @var Player\ActiveCards */
+    protected $playersActiveCards;
 
-    /** @var Card[]  */
-    protected $environmentCards = [];
+    /** @var Environment\ActiveCards */
+    protected $environmentActiveCards;
+
+    /** @var Environment\DayDeck  */
+    protected $environmentDayDeck;
+
+    /** @var Environment\NightDeck  */
+    protected $environmentNightDeck;
 
     /**
      * @var int
@@ -41,6 +47,10 @@ class Encampment implements GameObjectInterface
         $this
             ->setId(uniqid('room_'))
             ->setPlayerList([$player]);
+        $this->playersActiveCards = new Player\ActiveCards();
+        $this->environmentDayDeck = new Environment\DayDeck();
+        $this->environmentNightDeck = new Environment\NightDeck();
+        $this->environmentActiveCards = new Environment\ActiveCards();
     }
 
     /**
@@ -93,6 +103,23 @@ class Encampment implements GameObjectInterface
         }
 
         self::$gameStage = 0;
+    }
+
+    public function getPublicInfo(): array
+    {
+        $playersPublicData = [];
+        foreach ($this->players as $player) {
+            $playersPublicData[] = $player->getPublicInfo();
+        }
+        return [
+            'day' => static::$daysIterator,
+            'stage' => static::$gameStage,
+            'environmentDayCards' => $this->environmentDayDeck->getPublicData(),
+            'environmentNightCards' => $this->environmentNightDeck->getPublicData(),
+            'environmentActiveCards' => $this->environmentActiveCards->getPublicData(),
+            'playersActiveCards' => $this->playersActiveCards->getPublicData(),
+            'players' => $playersPublicData,
+        ];
     }
 
 }

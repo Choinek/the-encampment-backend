@@ -69,4 +69,11 @@ abstract class Deck implements GameObjectInterface
         return $this;
     }
 
+    public function getPublicData(): array
+    {
+        return [
+            'count' => $this->getCardCount(),
+        ];
+    }
+
 }
